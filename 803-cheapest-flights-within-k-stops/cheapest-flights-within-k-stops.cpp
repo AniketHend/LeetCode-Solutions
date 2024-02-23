@@ -30,7 +30,7 @@ typedef long long ll;
 typedef long double ld;
 
 const int mod = 1000000007; // 1000000007 998244353
-const ll inf = 1e18;
+const ll inf = INT_MAX;
 
 template <typename Func> class FUN_res {
     Func func_;
@@ -53,31 +53,27 @@ public:
             ll x = it[0], y = it[1], w = it[2];
             a[x].emplace_back(y, w);
         }
+        vector<ll> dp(n, inf);
 
-        vector<vector<vector<ll>>> dp(n + 1, vector<vector<ll>>(n + 1, vector<ll>(k + 5, -1)));
-        // dbg(dp);
-
-        ll ans =  FUN([&](const auto & f, ll u, ll par, ll stops) -> ll {
-            if (u == dst) {
-                return 0;
-            }
-            if (stops == 0) {
-                return inf;
-            }
-            dbg(u, par, dst, stops, dp[u][par][stops]);
-            if (dp[u][par][stops] != -1) return dp[u][par][stops];
-            ll ans = inf;
-            for (auto v : a[u]) {
-                if (v.ff != par) {
-                    ans = min(ans, v.ss + f(v.ff, u, stops - 1));
+        queue<pair<ll,ll>> q;
+        q.push({src,0});
+        dp[src] = 0;
+        while (k >= 0 && !q.empty()) {
+            ll y = sz(q);
+            for (int i = 0; i < y; i++) {
+                auto tp = q.front();
+                q.pop();
+                for (auto it : a[tp.ff]) {
+                    if (dp[it.ff] > tp.ss + it.ss) {
+                        dp[it.ff] = tp.ss + it.ss;
+                        q.push({it.ff,dp[it.ff]});
+                    }
                 }
             }
-            return dp[u][par][stops] =  ans;
-        })(src, src, k + 1);
-        if (ans >= inf) {
-            ans = -1;
+            k--;
         }
-        return ans;
+        if (dp[dst] >= inf) dp[dst] = -1;
+        return dp[dst];
     }
 };
 
