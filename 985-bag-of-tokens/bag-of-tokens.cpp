@@ -40,23 +40,17 @@ template <typename Func> class FUN_res {Func func_; public: template <typename T
 
 class Solution {
 public:
-    int bagOfTokensScore(vector<int>& tokens, int p) {
-        multiset<ll> st;
-        for (auto &i : tokens) st.insert(i);
+    int bagOfTokensScore(vector<int>& a, int p) {
+        int i = 0, j = sz(a) - 1;
+        sort(All(a));
         int sc = 0;
-        while (!st.empty()) {
-            if (p >= *st.begin()) {
-                int y = *st.begin();
-                p -= y;
-                sc++;
-                st.erase(st.find(y));
-            } else {
-                if(sc == 0) break;
-                if (sz(st) == 1) break;
-                int y = *st.rbegin();
-                p += y;
-                st.erase(st.find(y));
+        while (i <= j) {
+            if (p >= a[i]) sc++, p -= a[i],i++;
+            else {
+                if (sc == 0 || i == j) break;
                 sc--;
+                p += a[j];
+                j--;
             }
         }
         return sc;
