@@ -4,7 +4,6 @@ class Solution {
 public:
     int minimumLength(string s) {
         int i = 0, j = s.size() - 1;
-        cout << s.size() << endl;
         while (i < j) {
             char c_char = s[i];
             if(s[i] != s[j]) break;
