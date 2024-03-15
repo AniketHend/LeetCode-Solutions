@@ -40,20 +40,16 @@ class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
         ll n = sz(nums);
-        vi pf(n),sf(n);
-        pf[0]=nums[0],sf[n-1]=nums[n-1];
-        for(int i=1;i<n;i++) {
-            pf[i]=pf[i-1]*nums[i];
-        }
-        for(int i=n-2;i>=0;i--) {
-            sf[i]=sf[i+1]*nums[i];
-        }
-        vi res;
+        vi res(n,1);
+        ll p=1;
         for(int i=0;i<n;i++) {
-            ll cr=1;
-            if(i>0) cr*=pf[i-1];
-            if(i+1<n) cr*=sf[i+1];
-            res.push_back(cr);
+            res[i]*=p;
+            p*=nums[i];
+        }
+        p=1;
+        for(int i=n-1;i>=0;i--) {
+            res[i]*=p;
+            p*=nums[i];
         }
         return res;
     }
