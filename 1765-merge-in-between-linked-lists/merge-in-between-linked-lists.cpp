@@ -1,3 +1,6 @@
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
+
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -67,7 +70,6 @@ public:
             node_num++;
             l1_bnode = l1_bnode->next;
         }
-        cout << l1_anode->val<<" "<<l1_bnode->val<<endl;
         l1_anode->next=l2_head;
         l2_end->next = l1_bnode;
         return l1;
