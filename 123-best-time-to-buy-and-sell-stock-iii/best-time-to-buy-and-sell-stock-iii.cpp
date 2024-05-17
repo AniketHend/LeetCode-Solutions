@@ -13,14 +13,13 @@ public:
         {
             // buy or not buy
             buy=-prices[ind]+f(prices,ind+1,1-flag,canhave,dp);
-            notbuy=f(prices,ind+1,flag,canhave,dp);
         }//we can sell it
         else
         {
             //sell or not sell
             sell=prices[ind]+f(prices,ind+1,1-flag,canhave-1,dp);
-            notsell=f(prices,ind+1,flag,canhave,dp);
         }
+            notsell=f(prices,ind+1,flag,canhave,dp);
         return dp[ind][flag][canhave] =max(max(buy,notbuy),max(sell,notsell));
     }
     int maxProfit(vector<int>& prices) {
