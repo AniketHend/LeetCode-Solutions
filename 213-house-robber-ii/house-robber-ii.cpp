@@ -1,6 +1,7 @@
 class Solution {
 public:
     int func(int indx, vector<int>& valueInHouse, vector<int>& dp) {
+
         if (indx == 0) {
             return valueInHouse[indx];
         }
@@ -12,8 +13,10 @@ public:
         }
         int pick = valueInHouse[indx] + func(indx - 2, valueInHouse, dp);
         int notPick = 0 + func(indx - 1, valueInHouse, dp);
+
         return dp[indx] = max(pick, notPick);
     }
+
     int rob(vector<int>& valueInHouse) {
 
         int n = valueInHouse.size();
