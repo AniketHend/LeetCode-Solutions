@@ -19,24 +19,24 @@ public:
 
     int rob(vector<int>& valueInHouse) {
 
-        int n = valueInHouse.size();
-        if (n == 1)
-            return valueInHouse[0];
-        vector<int> dp(n, -1);
-        vector<int> temp1, temp2;
-        for (int i = 0; i < n; i++) {
-            if (i != 0) {
-                temp1.push_back(valueInHouse[i]);
-            }
-            if (i != n - 1) {
-                temp2.push_back(valueInHouse[i]);
-            }
+    int n = valueInHouse.size();
+    if(n == 1){
+        return valueInHouse[0];
+    }
+    vector<int> dp(n, -1);
+    vector<int> temp1, temp2;
+    for(int i = 0; i < n; i++){
+        if(i!=0){
+            temp1.push_back(valueInHouse[i]);
         }
+        if(i!=n-1){
+            temp2.push_back(valueInHouse[i]);
+        }
+    }
+    int ans1 = func(temp1.size()-1,temp1, dp );
+    dp.assign(n, -1);
+    int ans2 = func(temp2.size()-1, temp2, dp);
+    return max(ans1, ans2);
 
-        int x = func(temp1.size() - 1, temp1, dp);
-        dp.assign(n, -1);
-        int y = func(temp2.size() - 1, temp2, dp);
-        // cout << temp2[0] << endl;
-        return max(x, y);
     }
 };
