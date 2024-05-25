@@ -1,16 +1,15 @@
 import java.util.*;
 
 class Solution {
-    ;
     void generator(int i, int[] nums, List<Integer> temp,List<List<Integer>> ans) {
         if (i == nums.length) {
             ans.add(new ArrayList<>(temp));
             return;
         }
+        generator(i + 1, nums, temp,ans);
         temp.add(nums[i]);
         generator(i + 1, nums, temp,ans);
         temp.removeLast();
-        generator(i + 1, nums, temp,ans);
     }
 
     public List<List<Integer>> subsets(int[] nums) {
