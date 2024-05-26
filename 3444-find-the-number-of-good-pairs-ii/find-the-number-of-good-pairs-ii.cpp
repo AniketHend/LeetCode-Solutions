@@ -20,7 +20,7 @@ public:
         }
         ll cnt = 0;
         for(int i =0;i<nums2.size();i++){
-            ll val = k*1ll*nums2[i];
+            ll val = k*nums2[i];
             cnt+= mp[val];
         }
         return cnt;
