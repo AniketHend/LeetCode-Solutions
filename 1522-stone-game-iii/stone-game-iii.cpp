@@ -1,37 +1,28 @@
 class Solution {
 public:
-    int meth(vector<int> &a,int curr,vector<int> &dp)
-    {
-        if(curr>=a.size())
-        {
+    int meth(int i, vector<int>& a, vector<int>& dp) {
+        if (i >= a.size())
             return 0;
+        if (dp[i] != -1) {
+            return dp[i];
         }
-        if(dp[curr]!=-1)
-        {
-            return dp[curr];
-        }
-        int result=INT_MIN;
-        int total=0;
-        for(int i=0;i<3;i++)
-        {
-            if(curr+i<a.size())
-            {
-                total+=a[i+curr];
-                int x=total-meth(a,curr+i+1,dp);
-                result=max(result,x);
-            }
-        }
-        return dp[curr]=result;
+        int choice1 = a[i] - meth(i + 1, a, dp);
+        int choice2 = INT_MIN, choice3 = INT_MIN;
+        if (i + 1 < a.size())
+            choice2 = a[i] + a[i + 1] - meth(i + 2, a, dp);
+        if (i + 2 < a.size())
+            choice3 = a[i] + a[i + 1] + a[i + 2] - meth(i + 3, a, dp);
+        return dp[i] = max(choice1,max(choice2,choice3));
     }
     string stoneGameIII(vector<int>& a) {
-        int n=a.size();
-        vector<int> dp(n,-1);
-        int r=meth(a,0,dp);
-        if(r>0)
-        return "Alice";
-        else if(r==0)
-        return "Tie";
+        int n = a.size();
+        vector<int> dp(n, -1);
+        int x = meth(0, a, dp);
+        if (x > 0)
+            return "Alice";
+        else if (x < 0)
+            return "Bob";
         else
-        return "Bob";
+            return "Tie";
     }
 };
