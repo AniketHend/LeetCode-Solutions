@@ -1,33 +1,42 @@
+static const int _ = []() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    return 0;
+}();
+
 class Solution {
 public:
-    vector<vector<int>> next = {{0,1},{0,-1},{1,0},{-1,0}};
-    int getMaximumGold(vector<vector<int>>& g) {
-        int res =0,n=g.size(),m=g[0].size();
-        for(int i=0;i<n;i++) {
-            for(int j=0;j<m;j++) {
-                res = max(res, backTrack(g,i,j,n,m));
+    int mp,n,m;
+    vector<vector<int>> directions = {{0, 1}, {1, 0}, {0, -1}, { -1, 0}};
+    void dfs(int i, int j, vector<vector<int>>& grid, int profit) {
+        int x = grid[i][j];
+        profit += x;
+        grid[i][j] = 0;
+        mp = max(profit,  mp);
+        for (const auto &dir : directions) {
+            int neighbour_i = i + dir[0];
+            int neighbour_j = j + dir[1];
+            if (neighbour_i < 0 || neighbour_j < 0 || neighbour_i >= n || neighbour_j >= m)
+                continue;
+            if (grid[neighbour_i][neighbour_j] == 0)
+                continue;
+            dfs(neighbour_i, neighbour_j, grid, profit);
+        }
+        grid[i][j] = x;
+    }
+    int getMaximumGold(vector<vector<int>>& grid) {
+        n = grid.size();
+        m = grid[0].size();
+        mp = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] != 0) {
+                    int profit = 0;
+                    dfs(i, j, grid, profit);
+                }
             }
         }
-        return res;
-    }
-
-    int backTrack(vector<vector<int>>& g, int r, int c, int n, int m) {
-        if(!isValid(r, c, n, m) || g[r][c]==0) return 0;
-        int currVal = g[r][c];
-        g[r][c]=0;
-        int res = currVal;
-        int nextRes = 0;
-        for(int i=0;i<4;i++) {
-            int nextR = r + next[i][0];
-            int nextC = c + next[i][1];
-            nextRes = max(backTrack(g,nextR, nextC,n,m), nextRes);
-        }
-        g[r][c]=currVal;
-        return res + nextRes;
-    }
-
-    bool isValid(int r, int c, int n, int m) {
-        bool res = (r>=0 && c>=0 && r<n && c<m);
-        return res;
+        return mp;
     }
 };
