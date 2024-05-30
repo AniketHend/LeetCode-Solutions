@@ -8,7 +8,7 @@ public:
         int n = grid.size();
         int m = grid[0].size();
 
-        for(auto dir:directions){
+        for(auto &dir:directions){
             int neighbour_i = i + dir[0];
             int neighbour_j = j + dir[1];
             
@@ -69,8 +69,8 @@ public:
                 if(grid[i][j] != 0){   
                  vector<vector<int>> path_visi(n,vector<int> (m,0));
 
-                //   if(surround(i,j,grid))
-                //    continue;    
+                  if(surround(i,j,grid))
+                   continue;    
 
                  int profit = 0;
                  int maxi_profit = 0;
