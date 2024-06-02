@@ -21,7 +21,7 @@ public:
         };
 
         int l = 0;
-        int ans = abs(A[0] - k);
+        int ans = INT_MAX;
         for (int i = 0; i < N; ++i) {
             while (l < i && get(l, i + 1) < k) {
                 ans = min(ans, abs(get(l, i + 1) - k));
