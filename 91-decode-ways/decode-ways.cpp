@@ -1,4 +1,4 @@
-// // Code : 1
+// // // Code : 1
 // class Solution {
 // public:
 //     int dp[1000];
@@ -37,10 +37,14 @@ public:
         string x = "";
         for (int i = idx; i < idx + 3 && i < n; i++) {
             x.push_back(s[i]);
-            if (stoi(x) != 0 && stoi(x) <= 26)
+            if (stoi(x) != 0 && stoi(x) <= 26) {
+                if(i == idx + 2) {
+                    cout << x << endl;
+                }
                 ans += solve(i + 1, n, s);
+            }
             else
-                return dp[idx] =ans;
+                return dp[idx] = ans;
         }
         return dp[idx] = ans;
     }
