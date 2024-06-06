@@ -5,6 +5,12 @@
 
 // dp[i][j] = 1e9
 // dp[scr][0]=0;
+static const int _ = []() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    return 0;
+}();
 #define ll long long
 class Solution {
 public:
@@ -13,7 +19,7 @@ public:
         vector<ll> dist(n, 1e12);
         dist[src] = 0;
 
-        vector<ll> next(n,1e12);
+        vector<ll> next(n, 1e12);
         for (int i = 1; i <= k + 1; i++) {
             next = dist;
             for (auto it : flights) {
@@ -24,9 +30,6 @@ public:
             }
             dist = next;
         }
-        // for (int i = 0; i < n; i++)
-        //     cout << next[i] << " ";
-        // cout << endl;
         if (dist[dst] == 1e12) {
             return -1;
         }
