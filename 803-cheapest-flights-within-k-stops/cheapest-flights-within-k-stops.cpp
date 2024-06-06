@@ -11,9 +11,9 @@ public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst,
                           int k) {
         vector<ll> dist(n, 1e12);
-        vector<ll> next(n);
         dist[src] = 0;
 
+        vector<ll> next(n,1e12);
         for (int i = 1; i <= k + 1; i++) {
             next = dist;
             for (auto it : flights) {
@@ -22,11 +22,6 @@ public:
                 ll w = it[2];
                 next[to] = min(next[to], dist[from] + w);
             }
-
-            // for (int i = 0; i < n; i++)
-            //     cout << next[i] << " ";
-            // cout << endl;
-
             dist = next;
         }
         // for (int i = 0; i < n; i++)
