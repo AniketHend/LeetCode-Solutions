@@ -20,9 +20,9 @@ public:
             long long node = pq.top().second;
             long long distance = pq.top().first;
             pq.pop();
-            if(distance > dist[node]) continue;
-            // vector<pair<long long, long long>>& temp = ;
-            for (auto it : adj[node]) {
+            if (distance > dist[node])
+                continue;
+            for (auto& it : adj[node]) {
                 long long adjnode = it.first;
                 long long edgewt = it.second;
                 if (distance + edgewt < dist[adjnode]) {
