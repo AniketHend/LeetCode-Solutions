@@ -1,3 +1,22 @@
+// dp state
+// dp[i][j][cnt] denotes the maximum possible length of good subsequence from 0
+// to i th index such that ith index is considered into subsequce(1) or not(0)
+// such tht cnt is nos of indices satisfying conidtion
+
+// transition equations
+// dp[i][1][cnt] = 1+ dp[j][1][cnt] if v[i]==v[j], including prev one and curr
+//  else dp[i][1][cnt] = 1 + dp[j][0][cnt], including curr one
+//  if(cnt<=k)dp[i][1][cnt] = 1+ dp[i-1][1][cnt-1];// including both
+
+// dp[i][0][cnt] = max(dp[j][0][cnt],dp[j][1][cnt]);
+
+// base case
+// dp[0][0][0] = 0;
+// dp[0][1][0] = 1;
+
+// answer
+// max(dp[n-1][1/0][cnt])
+
 class Solution {
 public:
     int maximumLength(vector<int>& nums, int k) {
@@ -10,6 +29,7 @@ public:
         prev[nums[0]] = 0;
         int mx = 1;
         for (int i = 1; i < n; i++) {
+
             for (int cnt = 0; cnt <= k; cnt++) {
                 // exclude current one
                 dp[i][0][cnt] =
