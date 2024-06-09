@@ -1,13 +1,14 @@
 class Solution {
 public:
     int maxTotalReward(vector<int>& a) {
-        const int N = 100100;
+        const int N = 99999 + 1;
         bitset<N> dp;
         dp[0] = 1;
         bitset<N> ndp;
 
         sort(a.begin(), a.end());
         a.erase(unique(a.begin(), a.end()), a.end());
+
         int p = 0;
         for (auto& num : a) {
             while (p < num)
