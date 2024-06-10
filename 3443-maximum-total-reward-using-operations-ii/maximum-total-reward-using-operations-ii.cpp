@@ -1,23 +1,15 @@
 class Solution {
 public:
-    int maxTotalReward(vector<int>& a) {
-        const int N = 99999 + 1;
-        bitset<N> dp;
-        dp[0] = 1;
-        bitset<N> ndp;
-
-        sort(a.begin(), a.end());
-        a.erase(unique(a.begin(), a.end()), a.end());
-
-        int p = 0;
-        for (auto& num : a) {
-            while (p < num)
-                ndp.set(p++);
-            dp |= ((dp & ndp) << num);
-        }
-        int y = N - 1;
-        while (!dp[y])
-            y--;
-        return y;
+    int maxTotalReward(vector<int>& rewards) {
+        sort(begin(rewards), end(rewards));
+        int dp[50000] = {}, sz = rewards.size();
+        for (int i = 0; i < sz; ++i)
+            if (i == 0 || rewards[i - 1] != rewards[i]) {
+                int lim = min(rewards[i], rewards.back() - rewards[i]);
+                for (int x = 0; x < lim; ++x)
+                    dp[rewards[i] + dp[x]] = rewards[i] + dp[x];
+            }
+        return rewards.back() +
+               *max_element(begin(dp), begin(dp) + rewards.back());
     }
 };
