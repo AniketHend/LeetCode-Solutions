@@ -1,4 +1,9 @@
-static const int _ = []() {ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr); return 0;}();
+static const int _ = []() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    return 0;
+}();
 
 class Solution {
 public:
@@ -8,9 +13,14 @@ public:
         for (int i = 0; i < sz; ++i)
             if (i == 0 || rewards[i - 1] != rewards[i]) {
                 int lim = min(rewards[i], rewards.back() - rewards[i]);
-                for (int x = 0; x < lim; ++x)
+                for (int x = 0; x < lim; ++x) 
                     dp[rewards[i] + dp[x]] = rewards[i] + dp[x];
             }
+
+        // for (int i = 0; i <= rewards.back(); i++) {
+        //     cout << dp[i] << " ";
+        // }
+        // cout << endl;
         return rewards.back() +
                *max_element(begin(dp), begin(dp) + rewards.back());
     }
