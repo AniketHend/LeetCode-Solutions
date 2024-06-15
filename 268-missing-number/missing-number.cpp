@@ -1,9 +1,20 @@
-static const int _ = []() { ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr); return 0; }();
-
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int lo = 0;
         int n = nums.size();
-        return (n * (n + 1)) / 2 - accumulate(nums.begin(), nums.end(), 0);
+        int hi = n;
+
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (nums[mid] > mid) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+
+        return hi;
     }
 };
