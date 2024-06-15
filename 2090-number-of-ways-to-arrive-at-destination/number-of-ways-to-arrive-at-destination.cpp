@@ -1,40 +1,44 @@
-
 #define ll long long
-const ll mod = 1e9 + 7;
 class Solution {
 public:
     int countPaths(int n, vector<vector<int>>& roads) {
-        vector<pair<ll, ll>> g[n + 1];
-        for (auto it : roads) {
-            g[it[0]].push_back({it[1], it[2]});
-            g[it[1]].push_back({it[0], it[2]});
+        vector<pair<ll, ll>> adj[n];
+        for (auto x : roads) {
+            int from = x[0];
+            int to = x[1];
+            int weight = x[2];
+            adj[from].push_back({to, weight});
+            adj[to].push_back({from, weight});
         }
-        set<pair<ll, ll>> st;
-        st.insert({0, 0});
-        vector<ll> dist(n, 1e12);
-        dist[0] = 0;
-        vector<ll> nosWays(n, 0);
-        nosWays[0] = 1;
-        while (!st.empty()) {
-            pair<ll, ll> p = *st.begin();
-            st.erase(p);
-            ll dist_p = p.first;
-            ll node = p.second;
-            // if(dist_p > dist[node]) continue;
-            for (auto c : g[node]) {
-                ll to = c.first;
-                ll w = c.second;
-                if (dist_p + w < dist[to]) {
-                    st.erase({dist[to], to});
-                    nosWays[to] = nosWays[node];
-                    dist[to] = dist_p + w;
-                    st.insert({dist[to], to});
-                } else if (dist_p + w == dist[to]) {
-                    nosWays[to] = (nosWays[node] + nosWays[to]) % mod;
+        set<pair<ll, pair<ll, ll>>> st;
+        //{distance , ways}
+        vector<pair<ll, ll>> dist(n, {1e15, 0});
+        dist[0] = {0, 1};
+        // format of storing -> {distance , {node, current number of ways}}
+        st.insert({0, {0, 1}});
+
+        while (st.size()) {
+            auto it = *st.begin();
+            st.erase(it);
+
+            ll cur_dis = it.first;
+            ll cur_node = it.second.first;
+            ll ways = it.second.second;
+            if(cur_dis > dist[cur_node].first) continue;
+            for (auto x : adj[cur_node]) {
+                ll child = x.first;
+                ll weight = x.second;
+
+                if (dist[child].first > cur_dis + weight) {
+                    st.erase({dist[child].first, {child, dist[child].second}});
+                    dist[child] = {cur_dis + weight, dist[cur_node].second};
+                    st.insert({dist[child].first, {child, dist[child].second}});
+                } else if (dist[child].first == cur_dis + weight) {
+                    dist[child].second =
+                        (dist[child].second + dist[cur_node].second) % 1000000007;
                 }
             }
         }
-        cout << dist[n - 1] << endl;
-        return (int)nosWays[n - 1];
+        return dist[n - 1].second;
     }
 };
