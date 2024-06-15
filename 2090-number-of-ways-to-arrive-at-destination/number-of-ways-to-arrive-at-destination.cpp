@@ -24,7 +24,6 @@ public:
             ll cur_dis = it.first;
             ll cur_node = it.second.first;
             ll ways = it.second.second;
-            if(cur_dis > dist[cur_node].first) continue;
             for (auto x : adj[cur_node]) {
                 ll child = x.first;
                 ll weight = x.second;
@@ -35,7 +34,8 @@ public:
                     st.insert({dist[child].first, {child, dist[child].second}});
                 } else if (dist[child].first == cur_dis + weight) {
                     dist[child].second =
-                        (dist[child].second + dist[cur_node].second) % 1000000007;
+                        (dist[child].second + dist[cur_node].second) %
+                        1000000007;
                 }
             }
         }
