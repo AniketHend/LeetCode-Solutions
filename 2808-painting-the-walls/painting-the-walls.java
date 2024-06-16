@@ -11,10 +11,10 @@ class Solution {
         for (int i = 0; i <= n; i++) {
             Arrays.fill(dp[i], Integer.MAX_VALUE);
         }
-        // dp[0][0] = 0;
-        for (int i = 0; i <= n; i++) {
-            dp[i][0] = 0;
-        }
+        dp[0][0] = 0;
+        // for (int i = 0; i <= n; i++) {
+        //     dp[i][0] = 0;
+        // }
         // System.out.println(n);
 
         long ans = Integer.MAX_VALUE;
