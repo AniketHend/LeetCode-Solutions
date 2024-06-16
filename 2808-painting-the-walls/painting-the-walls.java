@@ -28,9 +28,6 @@ class Solution {
             }
             y += cost[i - 1];
         }
-        if (ans >= Integer.MAX_VALUE) {
-            ans = y;
-        }
         return ans;
     }
 }
