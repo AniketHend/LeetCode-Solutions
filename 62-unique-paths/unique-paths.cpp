@@ -1,50 +1,45 @@
 class Solution {
-
 public:
-    long long MOD = INT_MAX;
-    long long mod(long long x) { return ((x % MOD + MOD) % MOD); }
-    long long add(long long a, long long b) { return mod(mod(a) + mod(b)); }
-    long long sub(long long a, long long b) {
-        return mod(mod(a) - mod(b) + MOD);
-    }
-
-    long long mul(long long a, long long b) { return mod(mod(a) * mod(b)); }
-
-    long long binpow(long long a, long long b) {
+    long long mminvprime(long long x, long long p) {
+        long long y = p - 2;
         long long res = 1;
-        while (b > 0) {
-            if (b & 1)
-                res = (res * a) % MOD;
-            a = (a * a) % MOD;
-            b >>= 1;
+        x = x % p;
+
+        while (y > 0) {
+            if (y & 1)
+                res = (res * x) % p;
+            y = y >> 1;
+            x = (x * x) % p;
         }
         return res;
     }
 
+    long long mod_mul(long long x, long long y, long long MOD) {
+        long long ans = x % MOD;
+        ans = (ans * (y % MOD)) % MOD;
+
+        return ans;
+    }
+
     int uniquePaths(int m, int n) {
+        int maxn = 201;
 
-        int sum = n + m - 2;
-
-        // factorial calculator
-
-        long long n1 = sum;
-        vector<long long> fact(n1 + 1);
-        vector<long long> ifact(n1 + 1);
+        vector<long long> fact(maxn + 1);
+        vector<long long> ifact(maxn + 1);
 
         fact[0] = 1;
-
-        for (long long i = 1; i < n1 + 1; i++) {
-            fact[i] = (fact[i - 1] * i) % MOD;
+        int MOD = INT_MAX;
+        for (int i = 1; i <= maxn; i++) {
+            fact[i] = mod_mul(fact[i - 1], i, MOD);
         }
 
-        ifact[n1] = binpow(fact[n1], MOD - 2);
-        for (long long i = n1 - 1; i >= 0; i--) {
-            ifact[i] = mul(ifact[i + 1], (i + 1));
-        }
+        ifact[maxn] = mminvprime(fact[maxn], MOD);
 
-        // calc the result //D D D D D  RR  R R R ke different arrangements
+        for (int i = maxn - 1; i >= 0; i--) {
+            ifact[i] = mod_mul(ifact[i + 1], i + 1, MOD);
+        };
 
-        int ans = mul(fact[sum], mul(ifact[n - 1], ifact[m - 1]));
-        return ans;
+        return mod_mul(fact[n + m - 2],
+                       mod_mul(ifact[n - 1], ifact[m - 1], MOD), MOD);
     }
 };
