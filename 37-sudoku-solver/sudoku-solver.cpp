@@ -1,3 +1,10 @@
+static const int _ = []() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    return 0;
+}();
+
 class Solution {
     bool safe(int i, int j, vector<vector<char>>& board, char ch) {
         for (int k = i; k >= 0; k--) {
