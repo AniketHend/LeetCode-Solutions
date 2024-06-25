@@ -1,6 +1,13 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
+const static auto fast = []
+{ 
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    //std::cout.tie(nullptr);
+    return 0;
+}();
 
 using namespace __gnu_pbds;
 using namespace std;
