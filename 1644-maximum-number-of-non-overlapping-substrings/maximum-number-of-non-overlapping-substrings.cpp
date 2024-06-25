@@ -182,11 +182,6 @@ public:
             pre[i] = min(pre[i], y);
             end[i] = max(end[i], x);
         }
-
-        // for (int i = 0; i < 26; i++) {
-        //     cout << pre[i] << " " << end[i] << endl;
-        // }
-
         vector<pair<int, int>> dp(n + 1, { 0, 0});
         for (int i = n - 1; i >= 0; i--) {
             auto skip = dp[i + 1];
@@ -210,38 +205,63 @@ public:
             }
         }
 
+        // auto g = [&](auto g_, int i) -> void {
+        //     if (i >= n)
+        //         return;
+
+        //     auto here = dp[i];
+        //     pair<int, int> c = {INT_MIN, INT_MAX};
+        //     auto d = dp[i + 1];
+        //     if (pre[s[i] - 'a'] == i) {
+        //         c = dp[end[s[i] - 'a'] + 1];
+        //         c.first++;
+        //         c.second += (end[s[i] - 'a'] - i + 1);
+        //     }
+
+        //     if (c.first == here.first) {
+        //         if (d.first == here.first) {
+        //             if (c.second < d.second) {
+        //                 st.push_back(s.substr(i, end[s[i] - 'a'] - i + 1));
+        //                 g_(g_, end[s[i] - 'a'] + 1);
+        //             } else {
+        //                 g_(g_, i + 1);
+        //             }
+        //         } else {
+        //             st.push_back(s.substr(i, end[s[i] - 'a'] - i + 1));
+        //             g_(g_, end[s[i] - 'a'] + 1);
+        //         }
+        //     } else {
+        //         g_(g_, i + 1);
+        //     }
+        //     return;
+        // };
         vector<string> st;
-        auto g = [&](auto g_, int i) -> void {
-            if (i >= n)
-                return;
-
+        int i = 0;
+        while (i < n) {
             auto here = dp[i];
-            pair<int, int> c = {INT_MIN, INT_MAX};
-            auto d = dp[i + 1];
+            pair<int, int> can = {INT_MIN, INT_MAX};
+            auto skip = dp[i + 1];
             if (pre[s[i] - 'a'] == i) {
-                c = dp[end[s[i] - 'a'] + 1];
-                c.first++;
-                c.second += (end[s[i] - 'a'] - i + 1);
+                can = dp[end[s[i] - 'a'] + 1];
+                can.first++;
+                can.second += (end[s[i] - 'a'] - i + 1);
             }
-
-            if (c.first == here.first) {
-                if (d.first == here.first) {
-                    if (c.second < d.second) {
+            if (can.first == here.first) {
+                if (skip.first == here.first) {
+                    if (can.second < skip.second) {
                         st.push_back(s.substr(i, end[s[i] - 'a'] - i + 1));
-                        g_(g_, end[s[i] - 'a'] + 1);
+                        i = end[s[i] - 'a'] + 1;
                     } else {
-                        g_(g_, i + 1);
+                        i++;
                     }
                 } else {
                     st.push_back(s.substr(i, end[s[i] - 'a'] - i + 1));
-                    g_(g_, end[s[i] - 'a'] + 1);
+                    i = end[s[i] - 'a'] + 1;
                 }
             } else {
-                g_(g_, i + 1);
+                i++;
             }
-            return;
-        };
-        g(g, 0);
+        }
         return st;
     }
 };
