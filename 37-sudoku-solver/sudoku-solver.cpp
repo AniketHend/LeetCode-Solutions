@@ -4,6 +4,7 @@ static const int _ = []() {
     cout.tie(nullptr);
     return 0;
 }();
+#pragma GCC optimize("O2,unroll-loops") 
 
 class Solution {
     bool safe(int i, int j, vector<vector<char>>& board, char ch) {
