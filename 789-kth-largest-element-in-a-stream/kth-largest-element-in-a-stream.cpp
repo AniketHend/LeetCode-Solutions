@@ -1,25 +1,24 @@
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
-
-template <typename T>
-using omset = tree<T, null_type, greater_equal<T>, rb_tree_tag,
-                   tree_order_statistics_node_update>;
-
 class KthLargest {
-    omset<int> st;
+    multiset<int> st;
     int K;
+    void contract() {
+        while (!st.empty() && st.size() > K) {
+            st.erase(st.begin());
+        }
+    }
 
 public:
     KthLargest(int k, vector<int>& nums) {
         K = k;
         for (auto& num : nums)
             st.insert(num);
+        contract();
     }
 
     int add(int val) {
         st.insert(val);
-        return *st.find_by_order(K-1);
+        contract();
+        return *(st.begin());
     }
 };
 
