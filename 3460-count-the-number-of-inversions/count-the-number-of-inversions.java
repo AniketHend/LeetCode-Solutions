@@ -3,7 +3,6 @@ class Solution {
 
     int func(int i, int sum, int N, int cond[], int dp[][]) {
         if (i == N) {
-            System.out.println(sum);
             return 1;
         }
         if (sum > 400)
