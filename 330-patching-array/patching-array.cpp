@@ -1,4 +1,9 @@
-
+static const int _ = []() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    return 0;
+}();
 class Solution {
 public:
     int minPatches(vector<int>& nums, int n) {
@@ -7,7 +12,6 @@ public:
         int y = 0;
         for (auto& num : nums) {
             while (num > sa && sa <= n) {
-                // cout << num << " " << sa << endl;
                 y += 1;
                 sa += sa;
             }
