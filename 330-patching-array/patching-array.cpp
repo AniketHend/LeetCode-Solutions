@@ -7,7 +7,6 @@ static const int _ = []() {
 class Solution {
 public:
     int minPatches(vector<int>& nums, int n) {
-        sort(nums.begin(), nums.end());
         long long sa = 1;
         int y = 0;
         for (auto& num : nums) {
