@@ -12,12 +12,8 @@ public:
         int n = a.size();
         vector<vector<int>> ans;
         sort(a.begin(), a.end());
-        if (a[0] == a[n - 1] && a[0] == 0) {
-            return {{0, 0, 0}};
-        } else if (a[0] == a[n - 1]) {
-            return {};
-        }
         for (int i = 0; i < a.size() - 2; i++) {
+            if (i > 0 && a[i] == a[i-1]) continue;
             int j = i + 1, k = a.size() - 1;
             while (j < k) {
                 int csum = a[i] + a[j] + a[k];
