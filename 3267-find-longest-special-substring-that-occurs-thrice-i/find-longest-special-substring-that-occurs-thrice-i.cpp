@@ -1,3 +1,10 @@
+static const int _ = []() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    return 0;
+}();
+
 class Solution {
 public:
     bool check(string& s, int len) {
@@ -23,7 +30,6 @@ public:
         int n = s.size();
         int l = 1, h = n;
         int ans = -1;
-        cout << check(s, 2) << endl;
         while (l <= h) {
             int mid = (l + h) / 2;
             if (check(s, mid)) {
