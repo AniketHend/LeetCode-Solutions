@@ -122,7 +122,7 @@ public:
                 double m = (ok + ng) / 2;
                 ll i1 = lower_bound(all(nums1), m) - nums1.begin();
                 ll i2 = lower_bound(all(nums2), m) - nums2.begin();
-                cout << m << " " << i1 << " " << i2 << endl;
+                // cout << m << " " << i1 << " " << i2 << endl;
                 if (i1 + i2 >= (n + 1) / 2 + 1) {
                     ans2 = m;
                     ng = m;
