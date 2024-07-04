@@ -41,9 +41,9 @@ public:
             ll right = n - 1;
             while (left <= right) {
                 ll mid = left + (right - left) / 2;
-                ll len = mid - i;
-                if (h.g(0, len) == h.g(i, mid)) {
-                    lcp = len + 1;
+                ll len = mid - i + 1;
+                if (h.g(0, len - 1) == h.g(i, mid)) {
+                    lcp = len;
                     left = mid + 1;
                 } else {
                     right = mid - 1;
