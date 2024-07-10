@@ -150,21 +150,27 @@ public:
         while (!pq.empty()) {
             auto [t, u] = pq.top();
             pq.pop();
-            int ex = t;
-            if ((ex / c) % 2) ex = c + (c * (ex / c));
-            ex += time;
-
+            int ex = t + 1;
             for (const auto& v : g[u]) {
-                if (dp1[v] >  ex) {
+                if (dp1[v] > ex) {
                     dp1[v] =  ex;
                     pq.push(ii(dp1[v], v));
-                } else if (dp2[v] > ex || dp2[v] == dp1[v]) {
+                } else if (dp2[v] >  ex || dp2[v] == dp1[v]) {
                     dp2[v] = ex;
                     pq.push(ii(dp2[v], v));
                 }
             }
         }
-        return dp2[1];
+        
+        long long rq = 0;
+        while (dp2[1]--) {
+            int y = rq / c;
+            if (y % 2) {
+                rq += c - rq % c;
+            }
+            rq += time;
+        }
+        return rq;
     }
 };
 
