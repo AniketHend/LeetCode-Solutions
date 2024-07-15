@@ -6,35 +6,39 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
- * right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+#define MX 100001
+#pragma GCC optimize("03")
+#pragma GCC target ("avx")
+#pragma GCC target ("-fsplit-loops")
+TreeNode* Nodes[MX];
+TreeNode nodes[MX];
+int P[MX];
+int V[MX];
+int cnt = 0;
+int idx = 0;
+TreeNode* p;
+TreeNode* c;
+auto _ = [](){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL), cout.tie(NULL);
+    return 0;
+}();
 class Solution {
 public:
-    TreeNode* createBinaryTree(vector<vector<int>>& d) {
-        map<int, TreeNode*> mp;
-        map<int, int> ind;
-        for (auto edge : d) {
-            if (!mp.count(edge[0]))
-                mp[edge[0]] = new TreeNode(edge[0]);
-            if (!mp.count(edge[1]))
-                mp[edge[1]] = new TreeNode(edge[1]);
-            ind[edge[1]]++;
+    TreeNode* createBinaryTree(const vector<vector<int>>& descriptions) {
+        while(cnt) Nodes[V[--cnt]] = nullptr, P[V[cnt]] = 0;
+        idx = cnt;
+        for(const vector<int> &desc : descriptions){
+            int a = desc[0], b = desc[1];
+            p = Nodes[a] ? Nodes[a] : (Nodes[a] = &(nodes[idx++] = TreeNode(V[cnt++] = a)));
+            c = Nodes[b] ? Nodes[b] : (Nodes[b] = &(nodes[idx++] = TreeNode(V[cnt++] = b)));
+            P[b] = a;
+            if(desc[2]) p -> left = c; else p -> right = c;
         }
-        int rt = -1;
-        for (auto e : d) {
-            if (!ind.count(e[0]))
-                rt = e[0];
-        }
-        for (auto e : d) {
-            if(e[2] == 0) {
-                mp[e[0]]->right = mp[e[1]];
-            } else {
-                mp[e[0]]->left = mp[e[1]];
-            }
-        }
-
-        return mp[rt];
+        for(const vector<int> &desc : descriptions) if(!P[desc[0]]) return Nodes[desc[0]];
+        return NULL;
     }
 };
