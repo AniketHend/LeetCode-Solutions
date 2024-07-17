@@ -1,6 +1,6 @@
-select product_id,year first_year,quantity,price from Sales
-where (product_id,year) in
+SELECT product_id,year first_year,quantity,price FROM Sales
+WHERE (product_id,year) IN
 (
-select p.product_id,min(p.year) year from Sales p
-group by 1
+    SELECT p.product_id,min(p.year) year FROM Sales p
+    GROUP BY 1
 )
