@@ -139,20 +139,15 @@ public:
         ll n = sz(rowSum);
         ll m = sz(colSum);
         vvi dp(n, vi(m));
-        // while (true) {
-            bool ok = true;
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < m; j++) {
-                    if (rowSum[i] && colSum[j]) {
-                        ll x = min(rowSum[i], colSum[j]);
-                        rowSum[i] -= x, colSum[j] -= x;
-                        dp[i][j] += x;
-                        ok = false;
-                    }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (rowSum[i] && colSum[j]) {
+                    ll x = min(rowSum[i], colSum[j]);
+                    rowSum[i] -= x, colSum[j] -= x;
+                    dp[i][j] += x;
                 }
             }
-            // if (ok) break;
-        // }
+        }
         return dp;
     }
 };
