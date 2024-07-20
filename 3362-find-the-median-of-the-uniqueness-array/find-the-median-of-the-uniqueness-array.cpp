@@ -142,12 +142,15 @@ public:
         rq = (rq + 1)/2;
         auto chk = [&](ll m) {
             ll p = 0, cnt = 0;
-            unordered_map<ll, ll> mp;
+            vector<ll> mp(1e5+1);
+            ll d=0;
             fo(i, n) {
+                if(mp[nums[i]]==0) d++;
                 mp[nums[i]]++;
-                while (mp.size() > m) {
+
+                while (d > m) {
                     mp[nums[p]]--;
-                    if (!mp[nums[p]]) mp.erase(nums[p]);
+                    if (mp[nums[p]]==0) d--;
                     p++;
                 }
                 cnt += i - p + 1;
