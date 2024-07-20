@@ -139,7 +139,7 @@ public:
         ll n = sz(rowSum);
         ll m = sz(colSum);
         vvi dp(n, vi(m));
-        while (true) {
+        // while (true) {
             bool ok = true;
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < m; j++) {
@@ -151,8 +151,8 @@ public:
                     }
                 }
             }
-            if (ok) break;
-        }
+            // if (ok) break;
+        // }
         return dp;
     }
 };
