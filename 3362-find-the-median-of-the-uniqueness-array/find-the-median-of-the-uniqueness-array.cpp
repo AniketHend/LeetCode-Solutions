@@ -142,7 +142,7 @@ public:
         rq = (rq + 1)/2;
         auto chk = [&](ll m) {
             ll p = 0, cnt = 0;
-            vector<ll> mp(1e5+1);
+            vector<ll> mp(*max_element(all(nums))+1);
             ll d=0;
             fo(i, n) {
                 if(mp[nums[i]]==0) d++;
