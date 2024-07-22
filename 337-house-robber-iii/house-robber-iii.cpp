@@ -1,10 +1,12 @@
 class Solution {
-    map<TreeNode*,int> dp;
+    unordered_map<TreeNode*, int> dp;
+
 public:
     int rob(TreeNode* root) {
         if (!root)
             return 0;
-        if(dp.count(root)) return dp[root];
+        if (dp.count(root))
+            return dp[root];
         int pick = root->val;
         int x = 0;
         if (root->left) {
