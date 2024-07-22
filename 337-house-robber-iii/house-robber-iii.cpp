@@ -1,6 +1,5 @@
 class Solution {
     unordered_map<TreeNode*, int> dp;
-
 public:
     int rob(TreeNode* root) {
         if (!root)
