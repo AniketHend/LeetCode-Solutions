@@ -3,7 +3,7 @@ static const int _ = []() {ios::sync_with_stdio(false); cin.tie(nullptr); cout.t
 class Solution {
 public:
     vector<int> sortJumbled(vector<int>& M, vector<int>& nums) {
-        sort(nums.begin(), nums.end(), [&](const auto& a, const auto& b) {
+        sort(nums.begin(), nums.end(), [M](const auto& a, const auto& b) {
             int num1 = 0, num2 = 0;
             int x = a;
             int y = b;
