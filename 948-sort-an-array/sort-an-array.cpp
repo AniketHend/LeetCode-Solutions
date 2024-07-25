@@ -324,8 +324,8 @@ class Solution {
 
 public:
   vector<int> sortArray(vector<int>& nums) const {
-    count_buck_sort(nums);
-    //sort(nums.begin(), nums.end());
+    // count_buck_sort(nums);
+    sort(nums.begin(), nums.end());
     return nums;
   }
 };
