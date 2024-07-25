@@ -134,7 +134,7 @@ struct Compress {
 
 // solution
 class Solution {
-  void heapify(vector<int>& arr, int N, int i) {
+  void heapify(vector<int>& arr, int N, int i) const {
     int largest = i;
     int l = 2 * i + 1;
     int r = 2 * i + 2;
@@ -150,7 +150,7 @@ class Solution {
     }
   }
 
-  void heapSort(vector<int>& arr, int N) {
+  void heapSort(vector<int>& arr, int N) const {
     for (int i = N / 2 - 1; i >= 0; i--) {
       heapify(arr, N, i);
     }
@@ -162,7 +162,7 @@ class Solution {
   }
 
 public:
-  vector<int> sortArray(vector<int>& nums) {
+  vector<int> sortArray(vector<int>& nums) const {
     heapSort(nums, sz(nums));
     return nums;
   }
