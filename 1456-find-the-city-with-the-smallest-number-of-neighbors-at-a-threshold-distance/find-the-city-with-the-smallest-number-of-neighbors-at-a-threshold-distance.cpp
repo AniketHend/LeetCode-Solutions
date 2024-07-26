@@ -136,7 +136,7 @@ struct Compress {
 class Solution {
 public:
   int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-    vector<vector<long long>> dp(n, vector<long long>(n, INT_MAX));
+    vector<vector<int>> dp(n, vector<int>(n, 1e9));
     for (int start = 0; start < n; ++start) dp[start][start] = 0;
 
     for (auto &e : edges) {
@@ -151,7 +151,7 @@ public:
         }
       }
     }
-    int sa = INT_MAX, ind;
+    int sa = 1e9, ind;
     for (int node = 0; node < n; node++) {
       int now = 0;
       for (int j = 0; j < n; j++) {
