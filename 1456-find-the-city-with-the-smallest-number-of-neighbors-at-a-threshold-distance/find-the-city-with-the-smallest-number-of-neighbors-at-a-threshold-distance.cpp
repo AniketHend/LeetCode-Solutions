@@ -136,8 +136,13 @@ struct Compress {
 class Solution {
 public:
   int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-    vector<vector<int>> dp(n, vector<int>(n, 1e9));
-    for (int start = 0; start < n; ++start) dp[start][start] = 0;
+    int dp[n][n];
+    for (int start = 0; start < n; ++start) {
+      dp[start][start] = 0;
+      for(int end=0;end<n;++end) {
+        if(start != end) dp[start][end] = 1e9;
+      }
+    }
 
     for (auto &e : edges) {
       dp[e[0]][e[1]] = e[2];
