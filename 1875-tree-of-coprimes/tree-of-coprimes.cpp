@@ -14,6 +14,35 @@ int gcd(int a, int b) {
     }
     return a + b;
 }
+
+void fun(int u, int p, vector<vector<int>>& a, vector<int>& nums,
+         vector<pair<int, int>>& dp, vector<int>& sa) {
+    int dis = INT_MAX, node = -1;
+    auto ndp = dp;
+
+    for (int j = 1; j <= 50; j++) {
+        if (dp[j].first != -1 && gcd(j, nums[u]) == 1) {
+            if (dis > dp[j].second) {
+                dis = dp[j].second;
+                node = dp[j].first;
+            }
+        }
+        if (dp[j].second != -1) {
+            dp[j].second++;
+        }
+    }
+    dp[nums[u]].first = u;
+    dp[nums[u]].second = 1;
+    sa[u] = node;
+
+    for (auto& v : a[u]) {
+        if (v == p)
+            continue;
+        fun(v, u, a, nums, dp, sa);
+    }
+    dp = ndp;
+}
+
 // solution
 class Solution {
 public:
@@ -28,33 +57,7 @@ public:
 
         vector<pair<int, int>> dp(51, {-1, -1});
         vector<int> sa(n);
-        auto dfs = [&](auto&& dfs, int u, int p) -> void {
-            int dis = INT_MAX, node = -1;
-            auto ndp = dp;
-
-            for (int j = 1; j <= 50; j++) {
-                if (dp[j].first != -1 && gcd(j, nums[u]) == 1) {
-                    if (dis > dp[j].second) {
-                        dis = dp[j].second;
-                        node = dp[j].first;
-                    }
-                }
-                if (dp[j].second != -1) {
-                    dp[j].second++;
-                }
-            }
-            dp[nums[u]].first = u;
-            dp[nums[u]].second = 1;
-            sa[u] = node;
-
-            for (auto& v : a[u]) {
-                if (v == p)
-                    continue;
-                dfs(dfs, v, u);
-            }
-            dp = ndp;
-        };
-        dfs(dfs, 0, -1);
+        fun(0, -1, a, nums, dp, sa); 
         return sa;
     }
 };
