@@ -2,6 +2,7 @@
 #define INF 1e18
 #define ff first
 #define ss second
+static const int _ = []() {ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr); return 0;}();
 
 class Solution {
 
