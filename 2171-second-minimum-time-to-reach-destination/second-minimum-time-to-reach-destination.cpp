@@ -155,13 +155,13 @@ public:
                 if (dp1[v] > ex) {
                     dp1[v] =  ex;
                     pq.push(ii(dp1[v], v));
-                } else if (dp2[v] >  ex || dp2[v] == dp1[v]) {
+                } else if (dp2[v] > ex || dp2[v] == dp1[v]) {
                     dp2[v] = ex;
                     pq.push(ii(dp2[v], v));
                 }
             }
         }
-        
+
         long long rq = 0;
         while (dp2[1]--) {
             int y = rq / c;
