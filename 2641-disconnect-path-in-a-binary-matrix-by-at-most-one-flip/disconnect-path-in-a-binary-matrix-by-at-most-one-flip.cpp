@@ -1,38 +1,26 @@
 class Solution {
 public:
-    bool dfs(vector<vector<int>>& grid, int i, int j, int n, int m) {
-        if (i == n - 1 && j == m - 1)
-            return true;
-
-        grid[i][j] = 0;
-
-        int dc[2] = {0, 1};
-        int dr[2] = {1, 0};
-
-        for (int k = 0; k < 2; k++) {
-            int newX = i + dr[k];
-            int newY = j + dc[k];
-
-            if (newX >= 0 && newX < n && newY >= 0 && newY < m &&
-                grid[newX][newY] == 1) {
-                if (dfs(grid, newX, newY, n, m)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    Solution() {
+        std::ios_base::sync_with_stdio(false);
+        std::cin.tie(NULL);
+        std::cout.tie(NULL);
     }
+
     bool isPossibleToCutPath(vector<vector<int>>& grid) {
-        int n = grid.size();
-        int m = grid[0].size();
-
-        if (dfs(grid, 0, 0, n, m) == false) {
+        if (!erasePath(grid, 0, 0))
             return true;
-        }
+        grid[0][0] = 1;
+        return !erasePath(grid, 0, 0);
+    }
 
-        if (dfs(grid, 0, 0, n, m) == false) {
+    bool erasePath(vector<vector<int>>& grid, int row, int col) {
+        if (row == grid.size() || col == grid[0].size() || grid[row][col] == 0)
+            return false;
+
+        if (row == grid.size() - 1 && col == grid[0].size() - 1)
             return true;
-        }
-        return false;
+
+        grid[row][col] = 0;
+        return erasePath(grid, row + 1, col) || erasePath(grid, row, col + 1);
     }
 };
