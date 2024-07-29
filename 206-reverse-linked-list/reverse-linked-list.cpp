@@ -1,14 +1,14 @@
 using T = ListNode*;
 class Solution {
 public:
-    ListNode* reverseList(ListNode* head) { 
-        T prs = NULL, cur = head; 
-        while(cur) {
-            T nxt = cur->next;
-            cur->next = prs;
-            prs = cur;
-            cur = nxt;
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head->next) {
+            return head;
         }
-        return prs;
+        T new_head = reverseList(head->next);
+        T nxt = head->next;
+        nxt->next = head;
+        head->next = NULL;
+        return new_head;
     }
 };
