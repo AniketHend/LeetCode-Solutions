@@ -8,7 +8,7 @@ public:
         int suf[2] = {0, 0};
         for (char ch : s)
             suf[ch - 'a']++;
-        for (int i = 0; i < s.size(); i++) {
+        for (int i = 0; i < s.length(); i++) {
             // ithun b
             suf[s[i] - 'a']--;
             const int x = pre[1];
