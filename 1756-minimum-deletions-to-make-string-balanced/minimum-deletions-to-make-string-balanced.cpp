@@ -6,7 +6,7 @@ public:
         int ans = INT_MAX;
         int pre[2] = {0, 0};
         int suf[2] = {0, 0};
-        for (char ch : s)
+        for (const char & ch : s)
             suf[ch - 'a']++;
         for (int i = 0; i < s.length(); i++) {
             // ithun b
