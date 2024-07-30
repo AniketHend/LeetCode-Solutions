@@ -4,12 +4,12 @@ public:
         map<int, vector<int>> mpp;
         for (int i = 0; i < arr.size(); i++)
             mpp[arr[i]].push_back(i);
-        for (auto [x, y] : mpp) {
-            cout << x << "\n";
-            for (int j : y)
-                cout << j << " ";
-            cout << endl;
-        }
+        // for (auto [x, y] : mpp) {
+        //     cout << x << "\n";
+        //     for (int j : y)
+        //         cout << j << " ";
+        //     cout << endl;
+        // }
         int N = arr.size();
         map<int, vector<int>> g;
         vector<vector<int>> adj(N);
@@ -57,7 +57,7 @@ public:
                         pq.push({dp[v], v});
                     }
                 }
-                pq.push({dp[x],x});
+                pq.push({dp[x], x});
             } else {
                 for (auto v : adj[x]) {
                     if (dp[v] > dp[x] + 1) {
