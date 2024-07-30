@@ -11,8 +11,8 @@ public:
         for (int i = 0; i < s.size(); i++) {
             // ithun b
             suf[s[i] - 'a']--;
-            int x = pre[1];
-            int y = suf[0];
+            const int x = pre[1];
+            const int y = suf[0];
             pre[s[i] - 'a']++;
             ans = min(ans, x + y);
         }
