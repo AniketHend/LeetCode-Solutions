@@ -5,7 +5,8 @@ public:
         if (i == a.size()) {
             return 0;
         }
-        if (dp[i][mask] == INT_MAX) {
+        if (dp[i][mask] == -1) {
+            dp[i][mask] = INT_MAX;
             for (int j = 0; j < a.size(); j++) {
                 if ((mask & (1 << j)) == 0) {
                     dp[i][mask] = min(
@@ -20,7 +21,7 @@ public:
 
     int minimumXORSum(vector<int>& nums1, vector<int>& nums2) {
         int mask = 0;
-        vector<vector<int>> dp(14, vector<int>((1 << 14), INT_MAX));
+        vector<vector<int>> dp(14, vector<int>((1 << 14), -1));
 
         return fun(0, nums1, nums2, mask, dp);
     }
