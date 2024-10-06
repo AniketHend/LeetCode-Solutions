@@ -78,6 +78,14 @@ private:
 #define dbg(x...)
 #define dbgA(arr, n)
 #endif
+void dfs(int source, vector<vector<int>>& a, vector<int>&vis) {
+        vis[source] = 1;
+        for (auto& it : a[source]) {
+            if (vis[it] == 0) {
+                dfs(it, a,vis);
+           }
+        }
+    }
 
 // solution
 class Solution {
@@ -92,18 +100,20 @@ public:
     }
 
     vector<int> can(n);
-    queue<int> q;
-    q.push(k);
-    while (!q.empty()) {
-      int pt = q.front(); q.pop();
-      can[pt] = 1;
-      for (auto v : a[pt]) {
-        if (!can[v]) {
-        //   can[v] = 1;
-          q.push(v);
-        }
-      }
-    }
+    dfs(k,a,can);
+    // queue<int> q;
+    // q.push(k);
+    // while (!q.empty()) {
+    //   int pt = q.front(); q.pop();
+    //   can[pt] = 1;
+    //   for (auto v : a[pt]) {
+    //     if (!can[v]) {
+    //     //   can[v] = 1;
+    //       q.push(v);
+    //     }
+    //   }
+    // }
+    // dfs(k)
     vector<int> rem;
     vector<int> dp(n,1);
     
