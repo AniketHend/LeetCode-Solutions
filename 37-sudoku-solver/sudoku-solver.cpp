@@ -1,63 +1,147 @@
-static const int _ = []() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-    return 0;
-}();
-#pragma GCC optimize("O2,unroll-loops") 
-
 class Solution {
-    bool safe(int i, int j, vector<vector<char>>& board, char ch) {
-        for (int k = i; k >= 0; k--) {
-            if (board[k][j] == ch)
-                return false;
-        }
-        for (int k = i; k < 9; k++)
-            if (board[k][j] == ch)
-                return false;
-        for (int k = j; k >= 0; k--) {
-            if (board[i][k] == ch)
-                return false;
-        }
-        for (int k = j; k < 9; k++) {
-            if (board[i][k] == ch)
-                return false;
-        }
-        int x = (i / 3) * 3;
-        int y = (j / 3) * 3;
-        for (int p = x; p < x + 3; p++) {
-            for (int q = y; q < y + 3; q++) {
-                if (board[p][q] == ch)
-                    return false;
-            }
-        }
-        return true;
-    }
-    bool f(int i, int j, vector<vector<char>>& board) {
-        if (i == 9) {
-            return true;
-        }
-        if (j == 9) {
-            return f(i + 1, 0, board);
-        }
-        if (board[i][j] != '.') {
-            return f(i, j + 1, board);
-        }
-        for (char ch = '1'; ch <= '9'; ch++) {
-            if (safe(i, j, board, ch)) {
-                board[i][j] = ch;
-                bool ok = f(i, j + 1, board);
-                if (ok) {
-                    return true;
+public:
+    char a[9][9];
+    int filly = 0;
+    vector<pair<int, int>> v;
+    vector<vector<char>> praga;
+    bool val(int row, int col, int num) {
+        int c = 0;
+        int startrow, startcol;
+        startrow = row - (row % 3);
+        startcol = col - (col % 3);
+        for (int i = startrow; i < startrow + 3; i++) {
+            for (int j = startcol; j < startcol + 3; j++) {
+                int fix;
+                fix = a[i][j] - '0';
+                if (fix == num) {
+                    c++;
                 }
-                board[i][j] = '.';
             }
         }
-        return false;
+        for (int i = 0; i < row; i++) {
+            int fix;
+            fix = a[i][col] - '0';
+            if (fix == num) {
+                c++;
+            }
+        }
+        for (int i = row; i < 9; i++) {
+            int fix;
+            fix = a[i][col] - '0';
+            if (fix == num) {
+                c++;
+            }
+        }
+        for (int i = 0; i < col; i++) {
+            int fix;
+            fix = a[row][i] - '0';
+            if (fix == num) {
+                c++;
+            }
+        }
+        for (int i = col; i < 9; i++) {
+            int fix;
+            fix = a[row][i] - '0';
+            if (fix == num) {
+                c++;
+            }
+        }
+        if (c == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-public:
+    int ok = 0;
+    char ans[9][9];
+    void rec(int ind, int count) {
+        if (ok == 1) {
+            return;
+        }
+        if (ind == v.size()) {
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    ans[i][j] = a[i][j];
+                }
+            }
+            ok++;
+            return;
+        }
+        int row, col;
+        row = v[ind].first;
+        col = v[ind].second;
+        for (int i = 1; i <= 9; i++) {
+            if (val(row, col, i) == true) {
+                string rf;
+                rf = to_string(i);
+                char gp;
+                gp = rf[0];
+                a[row][col] = gp;
+                ind = ind + 1;
+                count = count + 1;
+                rec(ind, count); // index of pair ,
+                count = count - 1;
+                ind = ind - 1;
+                a[row][col] = '.';
+            }
+            if (i == 9) {
+                return;
+            }
+        }
+    }
     void solveSudoku(vector<vector<char>>& board) {
-        f(0, 0, board);
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                // cin>>a[i][j];
+                a[i][j] = board[i][j];
+                if (a[i][j] == '.') {
+                    v.push_back(make_pair(i, j));
+                    filly++;
+                }
+            }
+        }
+        int row, col;
+        int got = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (a[i][j] == '.') {
+                    row = i;
+                    col = j;
+                    got++;
+                    break;
+                }
+            }
+            if (got == 1) {
+                break;
+            }
+        }
+        int count = 0;
+        for (int i = 1; i <= 9; i++) {
+            if (ok == 1) {
+                break;
+            }
+            if (val(row, col, i) == true) {
+                string rf;
+                rf = to_string(i);
+                char gp;
+                gp = rf[0];
+                a[row][col] = gp;
+                count = count + 1;
+                rec(1, count); // index of pair ,
+                count = count - 1;
+                a[row][col] = '.';
+            }
+        }
+
+        for (int i = 0; i < 9; i++) {
+            vector<char> dpp;
+            for (int j = 0; j < 9; j++) {
+                dpp.push_back(ans[i][j]);
+            }
+            praga.push_back(dpp);
+        }
+        
+        board = praga;
     }
 };
