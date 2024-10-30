@@ -118,29 +118,24 @@ private:
 
 public:
   int lengthAfterTransformations(string s, int t, vector<int>& nums) {
-    
-    vvl sa(26, vl(26, 0));
+    const int N = 26;
+    vvl sa(N, vl(N));
 
-    for (int i = 0; i < 26; i++) {
-      int count = nums[i];
-      int next = (i + 1) % 26;
-      for (int j = 0; j < count; j++) {
-        sa[next][i] = 1;
-        next = (next + 1) % 26;
+    for (int i = 0; i < N; ++i) {
+      for (int j = 0; j < nums[i]; ++j) {
+        sa[(i + j + 1) % N][i] = 1;
       }
     }
 
-    auto dp = matrixPower(sa, t);
-
-    vl ndp(26, 0);
-    for (char c : s) {
-      ndp[c - 'a']++;
-    }
-
+    sa = matrixPower(sa, t);
+    vl fq(N);
+    for (auto ch : s) fq[ch - 'a']++;
     ll ans = 0;
-    for (int i = 0; i < 26; i++) {
-      for (int j = 0; j < 26; j++) {
-        ans = (ans + (dp[i][j] * ndp[j]) % MOD) % MOD;
+
+    for (int i = 0; i < N; ++i) {
+      for (int j = 0; j < N; ++j) {
+        ans += (fq[j] * 1ll * sa[i][j]) % MOD;
+        ans %= MOD;
       }
     }
     return ans;
