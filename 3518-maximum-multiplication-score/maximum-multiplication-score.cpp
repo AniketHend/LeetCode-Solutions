@@ -85,12 +85,12 @@ class Solution {
     if (i == sz(b)) {
       return -1e18;
     }
-    if (dp[i][j] != -1) return dp[i][j];
+    if (dp[i][j] != -1e18) return dp[i][j];
     return dp[i][j] = max(b[i] * 1ll * a[j] + f(i + 1, j + 1, a, b, dp), f(i + 1, j, a, b, dp));
   }
 public:
   long long maxScore(vector<int>& a, vector<int>& b) {
-    vector<vector<ll>> dp(sz(b), vector<long long>(4, -1));
+    vector<vector<ll>> dp(sz(b), vector<long long>(4, -1e18));
     return f(0, 0, a, b, dp);
   }
 };
